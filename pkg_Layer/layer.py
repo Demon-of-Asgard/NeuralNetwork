@@ -1,7 +1,7 @@
 #-------------------------------------------------------------------------------
 import numpy as np
 from pkg_Transfer_Function.sigmoid import sigmoid
-from pkg_Transfer_Function.sigmoid import d_sigmoid 
+from pkg_Transfer_Function.sigmoid import d_sigmoid
 
 #-------------------------------------------------------------------------------
 class Layer():
@@ -14,7 +14,7 @@ class Layer():
         if self.kind != 'final':
             self.activation = np.ones((self.nNode+1, 1))
         else:
-            self.activation = np.zeros((self.nNode+1, 1))
+            self.activation = np.zeros((self.nNode, 1))
 
     def initialize_params(self, nNodeLast:int = 1):
         self.__EPSILON__ =  10**(-4)

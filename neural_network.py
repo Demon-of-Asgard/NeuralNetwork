@@ -52,9 +52,9 @@ class NeuralNetwork(LinkedList):
         self.remove_link(loc)
         self.nLayer -= 1
 
-    def load_values(self, xValue, yValue):
-        pass
-        
+    def load_training_values(self, xValue, yValue):
+        self.get_layer(0).activation[1:,:] = xValue
+
     def train(self):
         pass
 
@@ -67,8 +67,9 @@ class NeuralNetwork(LinkedList):
             lLast = self.get_layer(i-1)
             l = self.get_layer(i)
             l.activate(lLast.activation)
-            print('#layer: {} \nkind: {} \nactivation: \n{}\n\n'.
+            print('#layer: {} \nkind: {} \nactivation: \n{}'.
                 format(i, l.kind, l.activation))
+            print('theta: {}'.format(l.theta))
 
         # Returning the activation of the output layer as prediction.
         return self.get_layer(-1).activation
@@ -78,6 +79,10 @@ def main():
     import matplotlib.pyplot as plt
     xData = np.genfromtxt('./Test_Data/degitX.dat')
     ydata = np.genfromtxt('./Test_Data/degitY.dat')
+    NN = NeuralNetwork(2,1)
+    NN.get_layer(1).theta = np.array([-10, 20, 20])
+    input = np.array([[0],[0]])
+    print(NN.predict(input))
 #-------------------------------------------------------------------------------
 
 if __name__ == "__main__":
