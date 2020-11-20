@@ -8,30 +8,43 @@ from pkg_Layer.layer import Layer
 #-------------------------------------------------------------------------------
 
 class NeuralNetwork(LinkedList):
-    def __init__(self, nFeature:int, nClass:int, nHiddenLayer:tuple = (0,0)):
+    '''
+    Neural nertwork constructor.
+    __init__ args:
+        nFeature:int --> #feature per training sample.
+        Assumes that all training samples have same # fetures.
+
+        nOut:int --> #classifications.
+
+        nHiddenLayer:tuple(int, int) --> (#layer, #nodes per layer).
+        Assumes all hidden layers has same # nodes. If we want to have hidden
+        layers with different number of nodes, add_layer() method can be used.
+    '''
+    def __init__(self, nFeature:int, nOut:int, nHiddenLayer:tuple = (0,0)):
         LinkedList.__init__(self)
         # super(NeuralNetwork, self).__init__()
-        self.nFeature = nFeature
-        self.nClass = nClass
-        self.nHiddenLayer = nHiddenLayer
-        self.nLayer = 0
+        self.nFeature = nFeature            #features per training sample.
+        self.nOut = nOut                    # Number of classifications.
+        self.nHiddenLayer = nHiddenLayer    # Number of the hiden layers.
+        self.nLayer = 0                     # Total # layers.
 
-        # Initial layer
-        self.add_layer(self.nFeature, 0,'initial')
+        self.add_layer(self.nFeature, 0,'activation') # Adding activation layer.
 
-        #Hidden layers
-        for i in range(self.nHiddenLayer[0]):
+
+        for i in range(self.nHiddenLayer[0]):   #Creating hidden layers
             self.add_layer(nHiddenLayer[1],self.nLayer, 'hidden')
 
         # Final layer
-        self.add_layer(self.nClass, self.nLayer, 'final')
+        self.add_layer(self.nOut, self.nLayer, 'final')
 
     def get_layer(self, loc:int = -1):
+        '''Returns the layer obj at the given location. '''
         return self.get_link(loc)
 
     def add_layer(self, nNode, loc:int = -1, kind:str = 'hidden'):
+        ''' Add a leyer to the nural network at the specified location. '''
         self.nLayer += 1
-        if kind == 'initial':
+        if kind == 'activation':
             l = Layer(nNode, kind)
             l.initialize_activation()
             self.add_link(l, loc)
@@ -49,6 +62,7 @@ class NeuralNetwork(LinkedList):
             self.add_link(l, loc)
 
     def remove_layer(self, loc:int = -1):
+        ''' Remove a leyer @loc from the NN. '''
         self.remove_link(loc)
         self.nLayer -= 1
 

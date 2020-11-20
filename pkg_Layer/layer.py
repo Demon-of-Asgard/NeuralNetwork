@@ -1,13 +1,12 @@
 #-------------------------------------------------------------------------------
 import numpy as np
-from pkg_Transfer_Function.sigmoid import sigmoid
-from pkg_Transfer_Function.sigmoid import d_sigmoid
+from pkg_Transfer_Function.sigmoid import sigmoid, d_sigmoid
 
 #-------------------------------------------------------------------------------
 class Layer():
-    def __init__(self, nNode:int = 1, kind:str = 'hidden'):
+    def __init__(self, nNode:int = 1, nNodeLast:int = None,  kind:str = 'hidden'):
         self.nNode = nNode
-        self.kind = kind
+        self.kind  = kind
         self.theta = None
 
     def initialize_activation(self):
@@ -31,4 +30,4 @@ class Layer():
             self.net = np.dot(self.theta, lastLayerActivation)
             self.activation = sigmoid(self.net)
 
-#-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
